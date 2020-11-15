@@ -7,6 +7,7 @@
 		</nav-bar>
 		<homeSwiper :bannerList="bannerList"/>
 		<HomeRecommend :recommend="recommend"></HomeRecommend>
+		<tabControl :tabcontrolList="tabcontrolList"></tabControl>
 	</div>
 </template>
 
@@ -15,6 +16,7 @@
 import navBar from "components/common/navbar/navBar.vue"
 import homeSwiper from "views/Home/childComponents/homeSwiper.vue"
 import HomeRecommend from "views/Home/childComponents/HomeRecommend.vue"
+import TabControl from "components/content/TabControl.vue"
 
 
 //js
@@ -27,20 +29,21 @@ export default {
   data () {
     return {
     	bannerList:null,
-    	recommend:{}
+    	recommend:[],
+    	tabcontrolList:["流行","分类","精选"]
     }
   },
   created(){
   	getHomeMultidata().then(res=>{
   		this.bannerList=res.data.data.banner.list
   		this.recommend=res.data.data.recommend.list
-  		console.log(this.recommend);
   	})
   },
   components:{
   	navBar,
   	homeSwiper,
-  	HomeRecommend
+  	HomeRecommend,
+  	TabControl
   }
 };
 </script>
@@ -51,4 +54,5 @@ export default {
 	color:white;
 	box-shadow: 
 }
+
 </style>
