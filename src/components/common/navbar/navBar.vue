@@ -1,13 +1,15 @@
 <template>
-	<div class="navBar">
-		<div class="leftBar">
-			<slot name="leftBar"></slot>
-		</div>
-		<div class="midBar">
-			<slot name="midBar"></slot>
-		</div>
-		<div class="rightBar">
-			<slot name="rightBar"></slot>
+	<div class="mainnavBar">
+		<div class="navBar">
+			<div class="leftBar">
+				<slot name="leftBar"></slot>
+			</div>
+			<div class="midBar">
+				<slot name="midBar"></slot>
+			</div>
+			<div class="rightBar">
+				<slot name="rightBar"></slot>
+			</div>
 		</div>
 	</div>
 </template>
@@ -26,12 +28,18 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.mainnavBar{
+	position: fixed;
+	z-index:10;
+	top:0;
+	width:100%;
+}
 .navBar{
 	display: flex;
 	height:44px;
 	line-height: 44px;
-  text-align:center;
-  box-shadow: 0px 1px 1px rgba(100,100,100,0.1)
+    text-align:center;
+    box-shadow: 0px 1px 1px rgba(100,100,100,0.1)
 }
 .leftBar,.rightBar{
 	width:60px;

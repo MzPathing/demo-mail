@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper" ref="wrapper">
-		<div class="content">
+		<div class="content" id="content">
 			<slot></slot>
 		</div>
 	</div>
@@ -23,14 +23,15 @@ export default {
   		pullUpLoad:true,
       pullDownRefresh: true
   	})
-  	console.log(this.$refs.wrapper);
+  },
+  methods:{
+    backTop(x=0,y=0,time=3000){
+      this.scroll.scrollTo(x,y,time)
+    }
   }
 };
 </script>
 
 <style lang="css" scoped>
-.wrapper{
-  height:100vh;
-  overflow: hidden
-}
+
 </style>
