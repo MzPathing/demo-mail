@@ -6,13 +6,13 @@
 			</div>
 		</nav-bar>
     <!-- 绑定ref，获取到子元素scroll，响应回到顶部按钮 -->
-    <scroll ref="scroll">
+    <scroll ref="scroll" @scroll="scroll">
   		<homeSwiper :bannerList="bannerList"/>
   		<HomeRecommend :recommend="recommend"></HomeRecommend>
   		<tabControl :tabcontrolList="tabcontrolList" @itemClick="itemClick"></tabControl>
   		<tabControlGoods :goodsList="goodsItems" ></tabControlGoods>
     </scroll>
-    <backTop @click.native="backTopClick"/>
+    <backTop @click.native="backTopClick" v-show="showBackTop"/>
 	</div>
 </template>
 
@@ -58,7 +58,8 @@ export default {
     			list:[]
     		},
     	},
-    	showGood:'pop'
+    	showGood:'pop',
+      showBackTop:false
     }
   },
   created(){
@@ -106,6 +107,11 @@ export default {
     //回到顶部按钮点击事件
     backTopClick(){
       this.$refs.scroll.backTop(0,0,1000)
+    },
+    //监听滚动，在滑动距离超过1000的时候显示回到顶部按钮
+    scroll(position){
+      this.showBackTop=position.y<=-1000?true:false
+
     }
   },
   computed:{

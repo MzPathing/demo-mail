@@ -23,6 +23,10 @@ export default {
   		pullUpLoad:true,
       pullDownRefresh: true
   	})
+    //监听滚动，在滑动的时候触发自定义事件
+    this.scroll.on('scroll',(position)=>{
+      this.$emit('scroll',position)
+    })
   },
   methods:{
     backTop(x=0,y=0,time=3000){
