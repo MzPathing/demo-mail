@@ -11,12 +11,6 @@ export default {
 
   data () {
     return {
-
-    }
-  },
-  methods:{
-    backTop(x=0,y=0,t=300){
-      this.scroll.scrollTo(x,y,t)
     }
   }
 };

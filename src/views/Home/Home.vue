@@ -6,7 +6,11 @@
 			</div>
 		</nav-bar>
     <!-- 绑定ref，获取到子元素scroll，响应回到顶部按钮 -->
-    <scroll ref="scroll" @scroll="scroll">
+    <scroll ref="scroll" 
+    @scroll="scroll" 
+     @pullingUp="pullingUp"
+    :listenScrollKey="3" 
+    :pullUpLoad="true">
   		<homeSwiper :bannerList="bannerList"/>
   		<HomeRecommend :recommend="recommend"></HomeRecommend>
   		<tabControl :tabcontrolList="tabcontrolList" @itemClick="itemClick"></tabControl>
@@ -40,7 +44,7 @@ export default {
     return {
     	bannerList:null,
     	recommend:[],
-    	tabcontrolList:["流行","分类","精选"],
+    	tabcontrolList:["流行","新款","精选"],
     	goodsList:{
     		pop:{
     			type:'pop',
@@ -103,6 +107,7 @@ export default {
   			this.showGood="sell";
   			break;
   		}
+      console.log(this.showGood);
   	},
     //回到顶部按钮点击事件
     backTopClick(){
@@ -112,6 +117,11 @@ export default {
     scroll(position){
       this.showBackTop=position.y<=-1000?true:false
 
+    },
+    //滑动到底部时触发的函数
+    pullingUp(){
+      this.getGoodsItems(this.showGood,this.goodsList[this.showGood].num)
+      this.$refs.scroll.scroll.finishPullUp()
     }
   },
   computed:{
