@@ -71,6 +71,14 @@ export default {
   	this.getGoodsItems('pop',this.goodsList.pop.num)
   	this.getGoodsItems('sell',this.goodsList.sell.num)
   	this.getGoodsItems('new',this.goodsList.new.num)
+
+
+  },
+  mounted(){
+    this.$bus.$on("imgLoad",()=>{
+      // console.log("接收到图片发射事件");
+      this.$refs.scroll.scroll.refresh()
+    })
   },
   components:{
   	navBar,
