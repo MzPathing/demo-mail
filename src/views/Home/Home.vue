@@ -35,6 +35,7 @@ import backTop from "components/content/backTop/backTop.vue"
 
 //js
 import {getHomeMultidata,getGoodsItems} from "network/HomeRequest.js"
+import {debounce} from "common/utils/utils.js"
 
 export default {
 
@@ -75,9 +76,9 @@ export default {
 
   },
   mounted(){
+    const refresh=debounce(this.$refs.scroll.refresh,500)
     this.$bus.$on("imgLoad",()=>{
-      // console.log("接收到图片发射事件");
-      this.$refs.scroll.scroll.refresh()
+      refresh()
     })
   },
   components:{
@@ -124,13 +125,13 @@ export default {
     //监听滚动，在滑动距离超过1000的时候显示回到顶部按钮
     scroll(position){
       this.showBackTop=position.y<=-1000?true:false
-
     },
     //滑动到底部时触发的函数
     pullingUp(){
       this.getGoodsItems(this.showGood,this.goodsList[this.showGood].num)
       this.$refs.scroll.scroll.finishPullUp()
     }
+    
   },
   computed:{
   	goodsItems(){
