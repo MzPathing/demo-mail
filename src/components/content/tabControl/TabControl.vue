@@ -35,7 +35,6 @@ export default {
 .tab-control{
 	display: flex;
 	background-color: white;
-	position:sticky;
 	top:44px;
 }
 .tab-item{

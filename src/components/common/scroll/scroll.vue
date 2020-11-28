@@ -54,5 +54,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
+.wrapper{
+  overflow: hidden
+}
 </style>

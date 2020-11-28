@@ -5,6 +5,7 @@
 				购物街
 			</div>
 		</nav-bar>
+    <tabControl :tabcontrolList="tabcontrolList" @itemClick="itemClick" ref="tabControlFaker" v-show="showFakerTabControlTop"></tabControl>
     <!-- 绑定ref，获取到子元素scroll，响应回到顶部按钮 -->
     <scroll ref="scroll" 
     @scroll="scroll" 
@@ -12,8 +13,8 @@
     :listenScrollKey="3" 
     :pullUpLoad="true">
   		<homeSwiper :bannerList="bannerList"/>
-  		<HomeRecommend :recommend="recommend"></HomeRecommend>
-  		<tabControl :tabcontrolList="tabcontrolList" @itemClick="itemClick"></tabControl>
+  		<HomeRecommend :recommend="recommend" @recommendImgLoad="recommendImgLoad"></HomeRecommend>
+  		<tabControl :tabcontrolList="tabcontrolList" @itemClick="itemClick" ref="tabControl" v-show="!showFakerTabControlTop"></tabControl>
   		<tabControlGoods :goodsList="goodsItems" ></tabControlGoods>
     </scroll>
     <backTop @click.native="backTopClick" v-show="showBackTop"/>
@@ -64,7 +65,11 @@ export default {
     		},
     	},
     	showGood:'pop',
-      showBackTop:false
+      showBackTop:false,
+      //悬浮选项卡位置
+      tabControlTop:0,
+      //是否显示假的悬浮卡
+      showFakerTabControlTop:false
     }
   },
   created(){
@@ -116,20 +121,32 @@ export default {
   			this.showGood="sell";
   			break;
   		}
-      console.log(this.showGood);
+      //同步两个控件样式
+      this.$refs.tabControl.currentIndex=index
+      this.$refs.tabControlFaker.currentIndex=index
   	},
     //回到顶部按钮点击事件
     backTopClick(){
       this.$refs.scroll.backTop(0,0,1000)
     },
-    //监听滚动，在滑动距离超过1000的时候显示回到顶部按钮
+    //监听滚动
     scroll(position){
+      //在滑动距离超过1000的时候显示回到顶部按钮
       this.showBackTop=position.y<=-1000?true:false
+      //设置TabControl显示
+      this.showFakerTabControlTop=-position.y>=this.tabControlTop?true:false
+
     },
     //滑动到底部时触发的函数
     pullingUp(){
       this.getGoodsItems(this.showGood,this.goodsList[this.showGood].num)
       this.$refs.scroll.scroll.finishPullUp()
+    },
+    //recommend图片加载完成，获取悬浮选项卡的位置
+    recommendImgLoad(){
+
+      this.tabControlTop=this.$refs.tabControl.$el.offsetTop
+
     }
     
   },
@@ -151,7 +168,6 @@ export default {
 .home-nav{
 	background-color: pink;
 	color:white;
-	box-shadow: 
 }
 .wrapper{
   height:-webkit-calc(100% - 44px - 49px)
