@@ -12,7 +12,7 @@
      @pullingUp="pullingUp"
     :listenScrollKey="3" 
     :pullUpLoad="true">
-  		<homeSwiper :bannerList="bannerList"/>
+  		<homeSwiper :bannerList="bannerList" ref="homeSwiper" />
   		<HomeRecommend :recommend="recommend" @recommendImgLoad="recommendImgLoad"></HomeRecommend>
   		<tabControl :tabcontrolList="tabcontrolList" @itemClick="itemClick" ref="tabControl" v-show="!showFakerTabControlTop"></tabControl>
   		<tabControlGoods :goodsList="goodsItems" ></tabControlGoods>
@@ -69,7 +69,9 @@ export default {
       //悬浮选项卡位置
       tabControlTop:0,
       //是否显示假的悬浮卡
-      showFakerTabControlTop:false
+      showFakerTabControlTop:false,
+      //用于保存当前滑动的页面高度
+      scrollY:0
     }
   },
   created(){
@@ -77,9 +79,18 @@ export default {
   	this.getGoodsItems('pop',this.goodsList.pop.num)
   	this.getGoodsItems('sell',this.goodsList.sell.num)
   	this.getGoodsItems('new',this.goodsList.new.num)
-
-
   },
+  destroyed(){
+    console.log("销毁");
+  },
+  activated(){
+    this.$refs.homeSwiper.refreshHandleDom();
+    this.$refs.scroll.scroll.scrollTo(0,this.scrollY,0)
+  },
+  deactivated(){
+    //保存当前页面高度
+    this.scrollY=this.$refs.scroll.scroll.y
+  },  
   mounted(){
     const refresh=debounce(this.$refs.scroll.refresh,500)
     this.$bus.$on("imgLoad",()=>{

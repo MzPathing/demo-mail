@@ -50,7 +50,7 @@
 
         // 2.开启定时器
         this.startTimer();
-      }, 3000)
+      }, 1000)
     },
     methods: {
       /**
@@ -117,8 +117,17 @@
        * 操作DOM, 在DOM前后添加Slide
        */
       handleDom: function () {
+        //如果已经执行过一次这个函数了，不再执行，因为slideCount初始为0，并且是全局变量不会销毁，所以可以用于判断
+        if(this.slideCount){
+          return
+        }
         // 1.获取要操作的元素
         let swiperEl = document.querySelector('.swiper');
+        //出现报错的情况，下面的函数用于回调解决报错
+        if(!swiperEl){
+          console.log("cannot find swiper");
+          return
+        }
         let slidesEls = swiperEl.getElementsByClassName('slide');
 
         // 2.保存个数

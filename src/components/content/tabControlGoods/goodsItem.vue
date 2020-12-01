@@ -1,6 +1,7 @@
 <template>
-	<div class="goodsItem">
-		<a :href="goodsList.clientUrl" title="">
+	<div class="goodsItem" @click="goodsItemClick">
+		<!-- <a :href="goodsList.clientUrl" title=""> -->
+		<a title="">
 			<img :src="goodsList.show.img" alt=""  @load="imgLoad">
 			<div class="goodsInfo">
 				<p class="goodsDec">{{goodsList.props[0]}}</p>
@@ -29,6 +30,14 @@ export default {
   methods:{
   	imgLoad(){
   		this.$bus.$emit("imgLoad")
+  	},
+  	goodsItemClick(){
+  		this.$router.push({
+  			path:"/detail",
+  			query:{
+  				iid:this.goodsList.iid
+  			}
+  		})
   	}
   }
 };

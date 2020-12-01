@@ -1,5 +1,5 @@
 <template>
-	<swiper>
+	<swiper ref="swiper">
 		<swiperItem class="" v-for="item in bannerList">
 			<img :src="item.image" alt="">
 		</swiperItem>
@@ -23,6 +23,11 @@ export default {
   components:{
   	swiper,
   	swiperItem
+  },
+  methods:{
+    refreshHandleDom(){
+      this.$refs.swiper.handleDom()
+    }
   }
 };
 </script>
